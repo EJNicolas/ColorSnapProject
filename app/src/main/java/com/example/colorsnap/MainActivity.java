@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //test test test.
     Button buttonCamera, buttonColorSchemes, buttonSettings;
 
     @Override
