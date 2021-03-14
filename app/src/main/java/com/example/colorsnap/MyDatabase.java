@@ -74,6 +74,14 @@ public class MyDatabase {
 
     }
 
+    public Cursor getData()
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
+        Cursor cursor = db.query(Constants.TABLE_NAME, columns, null, null, null, null, null);
+        return cursor;
+    }
+
     public Cursor getData(String searchName)
     {
         SQLiteDatabase db = helper.getWritableDatabase();
