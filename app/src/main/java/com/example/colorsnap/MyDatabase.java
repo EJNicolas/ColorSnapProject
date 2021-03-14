@@ -86,7 +86,7 @@ public class MyDatabase {
     {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
-        String selection = Constants.NAME + "='" +searchName+ "'";  //Constants.TYPE = 'type'
+        String selection = Constants.NAME + "='" +searchName+ "'";
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
         return cursor;
     }

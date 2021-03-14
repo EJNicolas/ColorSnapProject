@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -40,9 +41,16 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         buttonSaveColor.setOnClickListener(this);
 
         Intent i = getIntent();
-        String colorSchemeTitle = i.getStringExtra("COLOR_SCHEME_NAME");
-        textViewColorSchemeTitle.setText(colorSchemeTitle);
+        String colorSchemeTitle;
         colorSchemeId = (int) i.getLongExtra("ROW_ID",-1);
+        if(colorSchemeId == -1){
+            colorSchemeTitle = i.getStringExtra("SAVED_COLOR_SCHEME_NAME");
+            Log.d("ViewColorScheme", colorSchemeTitle);
+        }
+        else{
+            colorSchemeTitle = i.getStringExtra("COLOR_SCHEME_NAME");
+        }
+        textViewColorSchemeTitle.setText(colorSchemeTitle);
 
         Log.d("ViewColorScheme", String.format("%d", colorSchemeId));
     }
@@ -60,6 +68,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         else if(buttonSaveColor.isPressed()){
             String input = tempColor.getText().toString();
             Constants.dbColorSchemes.addColor(colorSchemeId, input);
+            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
         }
         else if(buttonSearchColor.isPressed()){
             String input = tempColor.getText().toString();
