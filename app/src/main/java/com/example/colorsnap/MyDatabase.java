@@ -93,7 +93,7 @@ public class MyDatabase {
 
     public int deleteRow(String searchName){
         SQLiteDatabase db = helper.getWritableDatabase();
-        String[] whereArgs = {"searchName"};
+        String[] whereArgs = {searchName};
         int count = db.delete(Constants.TABLE_NAME, Constants.NAME + "=?", whereArgs);
         return count;
     }

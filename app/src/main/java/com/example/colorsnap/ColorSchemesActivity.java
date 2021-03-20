@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,10 +41,9 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         setRecyclerViewColorSchemes();
-
     }
 
     public void setRecyclerViewColorSchemes(){
@@ -82,7 +82,7 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String colorName = cursor.getString(nameColumn);
-            String s = colorName; //other coloers might be added to the arraylist later
+            String s = colorName; //other colors might be added to the arraylist later
             mArrayList.add(s);
             cursor.moveToNext();
         }
