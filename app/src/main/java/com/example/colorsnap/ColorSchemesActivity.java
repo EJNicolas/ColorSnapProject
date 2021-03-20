@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ColorSchemesActivity extends Activity implements View.OnClickListener {
 
-    Button buttonViewColorScheme, buttonAddColorScheme;
+    Button buttonAddColorScheme;
     EditText editTextNameInput;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
@@ -28,12 +28,10 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_schemes);
-        buttonViewColorScheme = (Button) findViewById(R.id.buttonViewColorScheme);
         buttonAddColorScheme = (Button) findViewById(R.id.buttonAddColorScheme);
         editTextNameInput = (EditText) findViewById(R.id.editTextColorName);
         recyclerView  = (RecyclerView) findViewById(R.id.recyclerViewColorScheme);
 
-        buttonViewColorScheme.setOnClickListener(this);
         buttonAddColorScheme.setOnClickListener(this);
 
         Cursor cursor;
@@ -66,11 +64,7 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if(buttonViewColorScheme.isPressed()){
-            Intent i = new Intent(this, ViewColorSchemeActivity.class);
-            startActivity(i);
-        }
-        else if(buttonAddColorScheme.isPressed()){
+        if(buttonAddColorScheme.isPressed()){
             long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
             Intent i = new Intent(this, ViewColorSchemeActivity.class);
             i.putExtra("COLOR_SCHEME_NAME", editTextNameInput.getText().toString());
