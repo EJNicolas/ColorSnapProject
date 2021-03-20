@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 
 public class ColorSchemesActivity extends Activity implements View.OnClickListener {
 
-    Button buttonAddColorScheme;
-    EditText editTextNameInput;
+    Button buttonAddColorScheme, buttonSearchColorScheme;
+    EditText editTextNameInput, editTextSearchName;
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -29,17 +30,29 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_schemes);
         buttonAddColorScheme = (Button) findViewById(R.id.buttonAddColorScheme);
+        buttonSearchColorScheme = (Button) findViewById(R.id.buttonSearchColorScheme);
         editTextNameInput = (EditText) findViewById(R.id.editTextColorName);
+        editTextSearchName = (EditText) findViewById(R.id.editTextSearchName);
         recyclerView  = (RecyclerView) findViewById(R.id.recyclerViewColorScheme);
 
         buttonAddColorScheme.setOnClickListener(this);
+        buttonSearchColorScheme.setOnClickListener(this);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setRecyclerViewColorSchemes();
+
+    }
+
+    public void setRecyclerViewColorSchemes(){
         Cursor cursor;
         cursor = Constants.dbColorSchemes.getData();
 
         int nameColumn = cursor.getColumnIndex(Constants.NAME);
 
-//        Will neeed these later
+//        might neeed these later
 //        int colorColumn1 = cursor.getColumnIndex(Constants.COLOR1);
 //        int colorColumn2 = cursor.getColumnIndex(Constants.COLOR2);
 //        int colorColumn3 = cursor.getColumnIndex(Constants.COLOR3);
@@ -59,11 +72,35 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         myAdapter = new MyAdapter(mArrayList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
+    }
 
+    public void searchColorScheme(String name){
+        Cursor cursor;
+        cursor = Constants.dbColorSchemes.getData(name);
+        int nameColumn = cursor.getColumnIndex(Constants.NAME);
+        ArrayList<String> mArrayList = new ArrayList<String>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String colorName = cursor.getString(nameColumn);
+            String s = colorName; //other coloers might be added to the arraylist later
+            mArrayList.add(s);
+            cursor.moveToNext();
+        }
+        myAdapter = new MyAdapter(mArrayList);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(myAdapter);
     }
 
     @Override
     public void onClick(View v) {
+        if(buttonSearchColorScheme.isPressed()){
+            if(editTextSearchName.getText().toString().equals("")){
+                setRecyclerViewColorSchemes();
+            }
+            else{
+                searchColorScheme(editTextSearchName.getText().toString());
+            }
+        }
         if(buttonAddColorScheme.isPressed()){
             long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
             Intent i = new Intent(this, ViewColorSchemeActivity.class);
