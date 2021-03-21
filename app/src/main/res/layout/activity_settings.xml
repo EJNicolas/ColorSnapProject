@@ -11,4 +11,82 @@
         android:layout_gravity="center"
         android:textSize="30sp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:text="Dark Mode"
+                    android:textSize="25sp"/>
+
+                <ToggleButton
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/toggleDarkMode"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Default Color Code Display"
+                    android:textSize="25sp"/>
+
+                <RadioGroup
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioRGBHexGroup">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="RGB(0-255,0-255,0-255)"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/radioRGB"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="Hexadecimal (#1122AA)"
+                        android:id="@+id/radioHex"/>
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Save settings"
+        android:layout_gravity="center"
+        android:id="@+id/buttonSaveSettings"
+        />
+
+
 </LinearLayout>

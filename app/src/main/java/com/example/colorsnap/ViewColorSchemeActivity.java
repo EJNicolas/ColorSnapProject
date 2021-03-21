@@ -24,10 +24,12 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
     private Button buttonEditColor, buttonAddColor, buttonSearchColor, buttonSaveColor;
     private EditText tempColor;
     private TextView textViewColorSchemeTitle;
-    String colorSchemeTitle;
+    private String colorSchemeTitle;
     private String[] colors = new String[5];
     private LinearLayout color1, color2, color3, color4, color5;
     private TextView colorTitle1, colorTitle2, colorTitle3, colorTitle4, colorTitle5;
+
+    private String focusedColor;
 
     private int colorSchemeId;
 

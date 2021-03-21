@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonColorSchemes.setOnClickListener(this);
         buttonSettings.setOnClickListener(this);
 
+
+
         Constants.dbColorSchemes = new MyDatabase(this);
     }
 
