@@ -3,6 +3,7 @@ package com.example.colorsnap;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -36,6 +37,19 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        if(!(sharedPrefs==null)){
+            boolean dark = sharedPrefs.getBoolean("darkMode", false);
+            if(dark){
+                setTheme(R.style.DarkTheme);
+            }
+            else{
+                setTheme(R.style.LightTheme);
+            }
+        }
+        else{
+            setTheme(R.style.LightTheme);
+        }
         setContentView(R.layout.activity_view_color_scheme);
 
         buttonEditColor = (Button) findViewById(R.id.buttonEditColor);
