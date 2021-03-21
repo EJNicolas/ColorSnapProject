@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCamera.setOnClickListener(this);
         buttonColorSchemes.setOnClickListener(this);
         buttonSettings.setOnClickListener(this);
+
+        Constants.dbColorSchemes = new MyDatabase(this);
     }
 
     @Override

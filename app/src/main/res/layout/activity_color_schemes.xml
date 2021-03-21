@@ -11,19 +11,55 @@
         android:layout_gravity="center"
         android:textSize="30sp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Color Scheme"
-        android:layout_gravity="center"
-        android:id="@+id/buttonViewColorScheme" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
+        <EditText
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/editTextSearchName" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_gravity="center"
+            android:id="@+id/buttonSearchColorScheme" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create New Color Scheme"
         android:layout_gravity="center"
-        android:id="@+id/buttonAddColorScheme" />
+        android:id="@+id/recyclerViewColorScheme"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/editTextColorName" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Create New Color Scheme"
+            android:layout_gravity="center"
+            android:id="@+id/buttonAddColorScheme" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
