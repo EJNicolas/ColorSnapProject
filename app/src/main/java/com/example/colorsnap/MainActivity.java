@@ -2,7 +2,9 @@ package com.example.colorsnap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        if(!(sharedPrefs==null)){
+            boolean dark = sharedPrefs.getBoolean("darkMode", false);
+            if(dark){
+                setTheme(R.style.DarkTheme);
+            }
+            else{
+                setTheme(R.style.LightTheme);
+            }
+        }
+        else{
+            setTheme(R.style.LightTheme);
+        }
+        setContentView(R.layout.activity_settings);
         setContentView(R.layout.activity_main);
 
         buttonCamera = (Button) findViewById(R.id.buttonCamera);

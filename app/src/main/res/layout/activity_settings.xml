@@ -2,14 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/baseLayout"
+    android:background="?attr/bgColor">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Settings"
         android:layout_gravity="center"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:textColor="?attr/textColor"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +35,8 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:text="Dark Mode"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="?attr/textColor"/>
 
                 <ToggleButton
                     android:layout_weight="1"
@@ -51,7 +55,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Default Color Code Display"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:textColor="?attr/textColor"/>
 
                 <RadioGroup
                     android:layout_weight="1"
@@ -62,16 +67,19 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="RGB(0-255,0-255,0-255)"
+                        android:text="Hexadecimal (#1122AA)"
                         android:layout_marginBottom="30dp"
-                        android:id="@+id/radioRGB"/>
+                        android:id="@+id/radioHex"
+                        android:checked="true"
+                        android:textColor="?attr/metaTextColor"/>
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="Hexadecimal (#1122AA)"
-                        android:id="@+id/radioHex"/>
-
+                        android:text="RGB(0-255,0-255,0-255)"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/radioRGB"
+                        android:textColor="?attr/metaTextColor"/>
                 </RadioGroup>
 
 
@@ -86,6 +94,8 @@
         android:text="Save settings"
         android:layout_gravity="center"
         android:id="@+id/buttonSaveSettings"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
         />
 
 

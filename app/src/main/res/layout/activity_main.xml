@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/bgColor">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,13 +14,7 @@
         android:text="ColorSnap"
         android:layout_gravity="center"
         android:textSize="50sp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Menu"
-        android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textColor="?attr/textColor"
         />
 
     <Button
