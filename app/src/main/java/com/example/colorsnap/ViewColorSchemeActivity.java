@@ -20,8 +20,10 @@ import androidx.annotation.Nullable;
 
 import org.w3c.dom.Text;
 
+//Activity to display colors within a color scheme.
 public class ViewColorSchemeActivity extends Activity implements View.OnClickListener {
 
+    //Create variables
     private Button buttonEditColor, buttonAddColor, buttonSearchColor, buttonSaveColor;
     private EditText tempColor;
     private TextView textViewColorSchemeTitle, textViewSelectedColor;
@@ -38,6 +40,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Getting shared preference data to decide if light or dark theme will be used
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         if(!(sharedPrefs==null)){
             boolean dark = sharedPrefs.getBoolean("darkMode", false);
@@ -52,7 +55,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             setTheme(R.style.LightTheme);
         }
         setContentView(R.layout.activity_view_color_scheme);
-
+        //Initialize variables
         buttonEditColor = (Button) findViewById(R.id.buttonEditColor);
         buttonAddColor = (Button) findViewById(R.id.buttonAddColor);
         buttonSearchColor = (Button) findViewById(R.id.buttonSearchColor);
@@ -72,7 +75,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         colorTitle3 = (TextView) findViewById(R.id.textViewColor3);
         colorTitle4 = (TextView) findViewById(R.id.textViewColor4);
         colorTitle5 = (TextView) findViewById(R.id.textViewColor5);
-
+        //Set listeners
         buttonEditColor.setOnClickListener(this);
         buttonAddColor.setOnClickListener(this);
         buttonSearchColor.setOnClickListener(this);
@@ -83,6 +86,8 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         color4.setOnClickListener(this);
         color5.setOnClickListener(this);
 
+        //Get data that tells this activity what color scheme it is (name and id)
+        //There are two possibilities, this could be an already made color scheme or a new one.
         Intent i = getIntent();
         colorSchemeId = (int) i.getLongExtra("ROW_ID",-1);
         if(colorSchemeId == -1){
@@ -93,6 +98,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         }
         textViewColorSchemeTitle.setText(colorSchemeTitle);
 
+        //Method to set and display colors on this activity
         setColorsView();
         selectedColor = colorTitle1.getText().toString();
         textViewSelectedColor.setText(selectedColor);
@@ -100,47 +106,56 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        //Go to the edit color activity, putting the selected color and the name of that color's column
         if(buttonEditColor.isPressed()){
             Intent i = new Intent(this, EditColorActivity.class);
             i.putExtra("EDIT_COLOR", selectedColor);
             i.putExtra("COLOR_COLUMN", selectedColumn);
             startActivityForResult(i, REQUEST_COLOR_CODE);
         }
+        //Move to the camera activity
         else if(buttonAddColor.isPressed()){
             Intent i = new Intent(this, CameraActivity.class);
             startActivity(i);
         }
+        //Takes the string from the edit text and places it in the database as a color. This is temporary as we do not have the camera and color picker working
         else if(buttonSaveColor.isPressed()){
             String input = tempColor.getText().toString();
             Constants.dbColorSchemes.addColor(colorSchemeId, input);
             Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
             setColorsView();
         }
+        //Takes user to a website which tells them more information about the color they selected
         else if(buttonSearchColor.isPressed()){
             Uri webpage = Uri.parse("https://coolors.co/" + selectedColor);
             Intent i = new Intent(Intent.ACTION_VIEW, webpage);
             startActivity(i);
         }
+        //Selects the first color
         else if(color1.isPressed()){
             selectedColumn = Constants.COLOR1;
             selectedColor = colors[0];
             textViewSelectedColor.setText(colorTitle1.getText().toString());
         }
+        //Selects the second color
         else if(color2.isPressed()){
             selectedColumn = Constants.COLOR2;
             selectedColor = colors[1];
             textViewSelectedColor.setText(colorTitle2.getText().toString());
         }
+        //Selects the third color
         else if(color3.isPressed()){
             selectedColumn = Constants.COLOR3;
             selectedColor = colors[2];
             textViewSelectedColor.setText(colorTitle3.getText().toString());
         }
+        //selects the fourth color
         else if(color4.isPressed()){
             selectedColumn = Constants.COLOR4;
             selectedColor = colors[3];
             textViewSelectedColor.setText(colorTitle4.getText().toString());
         }
+        //selects the fifth color
         else if(color5.isPressed()){
             selectedColumn = Constants.COLOR5;
             selectedColor = colors[4];
@@ -149,6 +164,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
     }
 
     private void setColorsView(){
+        //Get all of the data from a specific color scheme's title
         Cursor cursor;
         cursor = Constants.dbColorSchemes.getData(colorSchemeTitle);
         int colorColumn1 = cursor.getColumnIndex(Constants.COLOR1);
@@ -167,12 +183,15 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
 
         int colorSize = 300;
 
+        //Look at the user's preferences and see if they prefer seeing colors displayed in rgb or hexadecimal
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         boolean usingRGB = false;
         if(!(sharedPrefs==null)){
             usingRGB = sharedPrefs.getBoolean("usingRGB", false);
         }
 
+        //Checks if the color isnt null (hasnt been filled yet). If it isnt null, display the color's name and if possible set a linear layout's background to that color.
+        //This process is repeated for any other colors that arent null
         if(!colors[0].equals("null")){
 
             if(usingRGB)
@@ -248,6 +267,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Method to change a color to the edited color from the EditColorActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_COLOR_CODE){
             if(resultCode == RESULT_OK){
@@ -261,25 +281,31 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
     }
 
     public String convertHexToRGB(String hex){
+        //Method to convert a hexadecimal number to decimal and put it into an rgb() form
         String[] rgbValues = new String[3];
         String rgbString = hex;
 
         //How to split a string by number of characters learned from https://kodejava.org/how-to-split-a-string-by-a-number-of-characters/
+        //Splits the hex value into 3 parts, each part containg two digits
         try{
             rgbValues[0] = hex.substring(0, 2);
             rgbValues[1] = hex.substring(2, 4);
             rgbValues[2] = hex.substring(4, 6);
 
             //Converting hex to decimal learned from https://www.javatpoint.com/java-hex-to-decimal
+            //Converts the split up hex values into decimal.
             for(int i=0;i<rgbValues.length;i++){
                 rgbValues[i] = String.format("%d", Integer.parseInt(rgbValues[i], 16));
             }
 
+            //Places the values into an rgb() form
             rgbString = "rgb(" + rgbValues[0] + ", " + rgbValues[1] + ", " + rgbValues[2] + ")";
         }
         catch(Exception e){
             Toast.makeText(this, "Error converting hex to rgb", Toast.LENGTH_LONG).show();
         }
+
+        //Returns the string. If there is some error on converting the hex to rgb, the hex will be returned
         return rgbString;
     }
 

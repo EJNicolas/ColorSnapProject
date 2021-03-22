@@ -1,5 +1,5 @@
 package com.example.colorsnap;
-
+//Class for holding constants used for the database.
 public class Constants {
     public static final String DATABASE_NAME = "colordatabase";
     public static final String TABLE_NAME = "COLORSTABLE";

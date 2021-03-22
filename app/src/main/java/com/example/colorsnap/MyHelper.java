@@ -5,11 +5,13 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
-
+//Class to help build the database. Mainly reused/repurposed from Unit 6 PlantDataBaseRecyclerView project
 public class MyHelper extends SQLiteOpenHelper {
 
+    //Create variables
     private Context context;
 
+    //Initializes the variable which will create the table
     private static final String CREATE_TABLE =
             "CREATE TABLE "+
                     Constants.TABLE_NAME + " (" +

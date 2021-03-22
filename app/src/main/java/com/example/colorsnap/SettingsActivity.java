@@ -15,8 +15,10 @@ import android.widget.ToggleButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 
+//Activity for user settings
 public class SettingsActivity extends Activity implements View.OnClickListener, ToggleButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
 
+    //Create variables
     private Button buttonSaveSettings;
     private ToggleButton toggleDarkMode;
     private RadioGroup groupRGBHex;
@@ -28,6 +30,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Getting shared preference data to decide if light or dark theme will be used
         //Implementing dark theme referenced from https://blog.prototypr.io/implementing-dark-theme-in-android-dfe63e62145d
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         if(!(sharedPrefs==null)){
@@ -44,22 +47,24 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         }
         setContentView(R.layout.activity_settings);
 
+        //Initialize variables
         buttonSaveSettings = (Button) findViewById(R.id.buttonSaveSettings);
         toggleDarkMode = (ToggleButton) findViewById(R.id.toggleDarkMode);
         groupRGBHex = (RadioGroup) findViewById(R.id.radioRGBHexGroup);
         radioRGB = (RadioButton) findViewById(R.id.radioRGB);
         radioHex = (RadioButton) findViewById(R.id.radioHex);
 
+        //Set listeners
         buttonSaveSettings.setOnClickListener(this);
         toggleDarkMode.setOnCheckedChangeListener(this);
         groupRGBHex.setOnCheckedChangeListener(this);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        //Change UI appearance to match shared preferences data.
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         if(!(sharedPrefs==null)){
             toggleDarkMode.setChecked(sharedPrefs.getBoolean("darkMode", false));
@@ -76,6 +81,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        //save settings on press of the button
         if(buttonSaveSettings.isPressed()){
             saveSettings();
         }
@@ -83,6 +89,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //set the the dark mode using the toggle button
         if(isChecked){
             darkMode = true;
         }
@@ -93,6 +100,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        //set the display for color codes usng the radio buttons
         switch (checkedId){
             case R.id.radioRGB:
                 rgbDisplay = true;
@@ -104,6 +112,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
     }
 
     public void saveSettings(){
+        //Save the settings according to the UI
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putBoolean("darkMode", darkMode);

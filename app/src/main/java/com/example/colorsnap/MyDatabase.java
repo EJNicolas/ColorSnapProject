@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
+//Class for holding methods the database is capable of doing. These include adding rows, editing data, deleting data and queries
+//Reused/repurposed code from Unit 6 PlantDataBaseRecyclerView project
 public class MyDatabase {
+    //Create variables
     private SQLiteDatabase db;
     private Context context;
     private final MyHelper helper;
@@ -17,6 +19,7 @@ public class MyDatabase {
     }
 
     public long createRow(String name){
+        //creates a new row. Makes all of the color columns null to show that the user has not filled those spots yet.
         db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Constants.NAME, name);
@@ -30,7 +33,9 @@ public class MyDatabase {
     }
 
     public int addColor(int id, String colorCode){
+        //Adds a color on a specified row
         SQLiteDatabase db = helper.getWritableDatabase();
+        //columnName found by using a method which finds the nearest color column with null
         String columnName = findEmptyColumn(id);
         ContentValues cv = new ContentValues();
         cv.put(columnName, colorCode);
@@ -39,6 +44,7 @@ public class MyDatabase {
     }
 
     public int editColor(int id, String columnName, String newColor){
+        //adds a color on a specified row and column
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(columnName, newColor);
@@ -47,6 +53,7 @@ public class MyDatabase {
     }
 
     public String findEmptyColumn(int id){
+        //Perform a query that gets the data from a specific row
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
         String selection = Constants.UID + "='" +id+ "'";
@@ -57,7 +64,7 @@ public class MyDatabase {
         int colorColumn4 = cursor.getColumnIndex(Constants.COLOR4);
         int colorColumn5 = cursor.getColumnIndex(Constants.COLOR5);
         String outcome = Constants.COLOR1;
-
+        //Look through that row's columns, seraching for the first one that has "null" meaning its empty
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             if(cursor.getString(colorColumn1).equals("null")){
@@ -81,16 +88,16 @@ public class MyDatabase {
         return outcome;
     }
 
-    public Cursor getData()
-    {
+    public Cursor getData() {
+        //Gets all the data
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, null, null, null, null, null);
         return cursor;
     }
 
-    public Cursor getData(String searchName)
-    {
+    public Cursor getData(String searchName) {
+        //Gets all the data that has a user inputted name
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
         String selection = Constants.NAME + "='" +searchName+ "'";
@@ -99,6 +106,7 @@ public class MyDatabase {
     }
 
     public int deleteRow(String searchName){
+        //Deletes a row with a specific name
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] whereArgs = {searchName};
         int count = db.delete(Constants.TABLE_NAME, Constants.NAME + "=?", whereArgs);
