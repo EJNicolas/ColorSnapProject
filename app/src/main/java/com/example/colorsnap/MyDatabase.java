@@ -38,6 +38,14 @@ public class MyDatabase {
         return count;
     }
 
+    public int editColor(int id, String columnName, String newColor){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(columnName, newColor);
+        int count = db.update(Constants.TABLE_NAME, cv, Constants.UID + "=?", new String[]{String.format("%d", id)});
+        return count;
+    }
+
     public String findEmptyColumn(int id){
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
@@ -71,7 +79,6 @@ public class MyDatabase {
         }
 
         return outcome;
-
     }
 
     public Cursor getData()
