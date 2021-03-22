@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+
+
+// tes test
 public class MyDatabase {
     private SQLiteDatabase db;
     private Context context;
