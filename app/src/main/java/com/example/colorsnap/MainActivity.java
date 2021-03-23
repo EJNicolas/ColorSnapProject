@@ -6,8 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+
 
     //test test test.
     Button buttonCamera, buttonColorSchemes, buttonSettings;
@@ -16,6 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
+
 
         buttonCamera = (Button) findViewById(R.id.buttonCamera);
         buttonColorSchemes = (Button) findViewById(R.id.buttonColorSchemes);
@@ -42,5 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, SettingsActivity.class);
             startActivity(i);
         }
+
+
     }
 }
