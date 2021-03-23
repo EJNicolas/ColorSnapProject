@@ -18,21 +18,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-
+//Activity for editing the colour
 public class EditColorActivity extends Activity implements View.OnClickListener, SensorEventListener {
+
+    // creates the variables needed to store and change the colour displayed as a LinearLayout
+
     private LinearLayout colorDisplay;
     private Sensor sensorOrientation;
     private SensorManager sensorManager = null;
     private int currentColor;
     private String originalColor, colorColumn, hexColor;
     private TextView colorName;
-
     private Button buttonSaveColor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Getting shared preference data to decide if light or dark theme will be used
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         if(!(sharedPrefs==null)){
             boolean dark = sharedPrefs.getBoolean("darkMode", false);
@@ -47,7 +50,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
             setTheme(R.style.LightTheme);
         }
         setContentView(R.layout.activity_edit_color);
-
+        //Initialize variables
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
@@ -66,18 +69,19 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         }
         hexColor = originalColor;
         colorName.setText("#" + originalColor);
-
+        //Set listeners
         buttonSaveColor.setOnClickListener(this);
     }
 
-
     public void setSaturation(float x, float y, float z) {
+        //Initialize variables
+
 
         int color = currentColor;
-
         float[ ] hsv= new float [3];
+        // converting color to hsv
         Color.colorToHSV(color, hsv);
-
+        //take in sensor data and change its float value based on position
         float slope = (float) (1/ 6.28318);
         float output = (float) (slope * (z + 3.14159));
         hsv[1] = output;
