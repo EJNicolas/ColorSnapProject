@@ -13,17 +13,26 @@
         android:textSize="30sp"
         android:textColor="?attr/textColor"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:id="@+id/textViewEditColor"
+        android:textColor="?attr/textColor" />
+
+    <LinearLayout
+        android:id="@+id/colorChange"
+        android:layout_width="match_parent"
+        android:layout_height="373dp"
+        android:orientation="horizontal" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save color"
         android:layout_gravity="center"
         android:id="@+id/buttonSaveColor" />
-
-    <LinearLayout
-        android:id="@+id/colorChange"
-        android:layout_width="match_parent"
-        android:layout_height="373dp"
-        android:orientation="horizontal"></LinearLayout>
 
 </LinearLayout>

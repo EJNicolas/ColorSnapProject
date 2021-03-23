@@ -101,6 +101,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         //Method to set and display colors on this activity
         setColorsView();
         selectedColor = colorTitle1.getText().toString();
+        selectedColumn = Constants.COLOR1;
         textViewSelectedColor.setText(selectedColor);
     }
 
@@ -160,6 +161,22 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             selectedColumn = Constants.COLOR5;
             selectedColor = colors[4];
             textViewSelectedColor.setText(colorTitle5.getText().toString());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Method to change a color to the edited color from the EditColorActivity
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_COLOR_CODE){
+            if(resultCode == RESULT_OK){
+                if(data.hasExtra("EDITED_COLOR")){
+                    String editedColor = data.getExtras().getString("EDITED_COLOR");
+                    String colorColumn = data.getExtras().getString("COLOR_COLUMN");
+                    Constants.dbColorSchemes.editColor(colorSchemeId, colorColumn ,editedColor);
+                    setColorsView();
+                }
+            }
         }
     }
 
@@ -261,21 +278,6 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             }
             catch(Exception e){
                 Toast.makeText(this, "Color 5 is not a valid color", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //Method to change a color to the edited color from the EditColorActivity
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_COLOR_CODE){
-            if(resultCode == RESULT_OK){
-                if(data.hasExtra("WORD")){
-                    String editedColor = data.getExtras().getString("EDIT_COLOR");
-                    String colorColumn = data.getExtras().getString("COLOR_COLUMN");
-                    Constants.dbColorSchemes.editColor(colorSchemeId, colorColumn ,editedColor);
-                }
             }
         }
     }

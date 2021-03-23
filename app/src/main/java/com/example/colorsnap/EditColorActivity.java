@@ -14,18 +14,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
 
 
 public class EditColorActivity extends Activity implements View.OnClickListener, SensorEventListener {
     private LinearLayout colorDisplay;
     private Sensor sensorOrientation;
     private SensorManager sensorManager = null;
-    private int currentColor =  Color.parseColor("#FF6347");
+    private int currentColor;
+    private String originalColor, colorColumn, hexColor;
+    private TextView colorName;
 
-    Button buttonSaveColor;
+    private Button buttonSaveColor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,10 +47,25 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
             setTheme(R.style.LightTheme);
         }
         setContentView(R.layout.activity_edit_color);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
         colorDisplay = (LinearLayout)findViewById(R.id.colorChange);
+        colorName = (TextView) findViewById(R.id.textViewEditColor);
+
+        Intent i = getIntent();
+        originalColor = i.getStringExtra("EDIT_COLOR");
+        colorColumn = i.getStringExtra("COLOR_COLUMN");
+        try{
+            currentColor = Color.parseColor("#" + originalColor);
+        }
+        catch(Exception e){
+            Toast.makeText(this, "Error parsing color", Toast.LENGTH_SHORT).show();
+            currentColor = Color.parseColor("#123123");
+        }
+        hexColor = originalColor;
+        colorName.setText("#" + originalColor);
 
         buttonSaveColor.setOnClickListener(this);
     }
@@ -55,26 +73,27 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
 
     public void setSaturation(float x, float y, float z) {
 
-int color = currentColor;
+        int color = currentColor;
 
         float[ ] hsv= new float [3];
         Color.colorToHSV(color, hsv);
 
         float slope = (float) (1/ 6.28318);
-       float output = (float) (slope * (z + 3.14159));
+        float output = (float) (slope * (z + 3.14159));
         hsv[1] = output;
         float slopeX = (float) (1/ 6.28318);
         float outputX = (float) (slopeX * (x + 3.14159));
         hsv[2] = outputX;
         int newColor = Color.HSVToColor(hsv);
         currentColor = newColor;
+        //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
+        hexColor = String.format("%06X", (0xFFFFFF & currentColor));
+        colorName.setText("#" + hexColor);
         colorDisplay.setBackgroundColor(newColor);
-        Log.d("zTag", String.valueOf((z)));
-        Log.d("xTag", String.valueOf((x)));
-        Log.d("yTag", String.valueOf((y)));
 
-
-
+//        Log.d("zTag", String.valueOf((z)));
+//        Log.d("xTag", String.valueOf((x)));
+//        Log.d("yTag", String.valueOf((y)));
 
     }
 
@@ -97,8 +116,18 @@ int color = currentColor;
     @Override
     public void onClick(View v) {
         if(buttonSaveColor.isPressed()){
-            Intent i = new Intent(this, ViewColorSchemeActivity.class);
-            startActivity(i);
+            if(colorColumn==null){
+                Intent i = new Intent(this, ColorSchemesActivity.class);
+                startActivity(i);
+            }
+            else{
+                Log.d("EditColor", "New Color: " + hexColor);
+                Intent i = new Intent();
+                i.putExtra("EDITED_COLOR", hexColor);
+                i.putExtra("COLOR_COLUMN", colorColumn);
+                setResult(RESULT_OK, i);
+                finish();
+            }
         }
 
     }
