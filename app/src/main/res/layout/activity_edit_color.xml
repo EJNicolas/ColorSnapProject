@@ -20,4 +20,10 @@
         android:layout_gravity="center"
         android:id="@+id/buttonSaveColor" />
 
+    <LinearLayout
+        android:id="@+id/colorChange"
+        android:layout_width="match_parent"
+        android:layout_height="373dp"
+        android:orientation="horizontal"></LinearLayout>
+
 </LinearLayout>
