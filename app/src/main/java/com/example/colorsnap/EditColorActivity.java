@@ -30,6 +30,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     private String originalColor, colorColumn, hexColor;
     private TextView colorName;
     private Button buttonSaveColor;
+    private boolean usingRGB;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         colorDisplay = (LinearLayout)findViewById(R.id.colorChange);
         colorName = (TextView) findViewById(R.id.textViewEditColor);
 
+        //Getting intent data. Takes the color to edit and the color's column to place it back into
         Intent i = getIntent();
         originalColor = i.getStringExtra("EDIT_COLOR");
         colorColumn = i.getStringExtra("COLOR_COLUMN");
@@ -71,11 +73,18 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         colorName.setText("#" + originalColor);
         //Set listeners
         buttonSaveColor.setOnClickListener(this);
+
+        //Look at the user's preferences and see if they prefer seeing colors displayed in rgb or hexadecimal
+        sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        usingRGB = false;
+        if(!(sharedPrefs==null)){
+            usingRGB = sharedPrefs.getBoolean("usingRGB", false);
+        }
+
     }
 
     public void setSaturation(float x, float y, float z) {
         //Initialize variables
-
 
         int color = currentColor;
         float[ ] hsv= new float [3];
@@ -92,7 +101,12 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         currentColor = newColor;
         //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
         hexColor = String.format("%06X", (0xFFFFFF & currentColor));
-        colorName.setText("#" + hexColor);
+        if(usingRGB){
+            colorName.setText(convertHexToRGB(hexColor));
+        }
+        else{
+            colorName.setText("#" + hexColor);
+        }
         colorDisplay.setBackgroundColor(newColor);
 
 //        Log.d("zTag", String.valueOf((z)));
@@ -116,14 +130,15 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         super.onPause();
     }
 
-
     @Override
     public void onClick(View v) {
         if(buttonSaveColor.isPressed()){
+            //if a colorColumn didnt come through the intent, this means that this color isnt editing a previously made color
             if(colorColumn==null){
                 Intent i = new Intent(this, ColorSchemesActivity.class);
                 startActivity(i);
             }
+            //if there is a colorColumn found, then it did come from a made color scheme. This method finishes the startActivityForResult()
             else{
                 Log.d("EditColor", "New Color: " + hexColor);
                 Intent i = new Intent();
@@ -159,4 +174,34 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+    public String convertHexToRGB(String hex){
+        //Method to convert a hexadecimal number to decimal and put it into an rgb() form
+        String[] rgbValues = new String[3];
+        String rgbString = hex;
+
+        //How to split a string by number of characters learned from https://kodejava.org/how-to-split-a-string-by-a-number-of-characters/
+        //Splits the hex value into 3 parts, each part containg two digits
+        try{
+            rgbValues[0] = hex.substring(0, 2);
+            rgbValues[1] = hex.substring(2, 4);
+            rgbValues[2] = hex.substring(4, 6);
+
+            //Converting hex to decimal learned from https://www.javatpoint.com/java-hex-to-decimal
+            //Converts the split up hex values into decimal.
+            for(int i=0;i<rgbValues.length;i++){
+                rgbValues[i] = String.format("%d", Integer.parseInt(rgbValues[i], 16));
+            }
+
+            //Places the values into an rgb() form
+            rgbString = "rgb(" + rgbValues[0] + ", " + rgbValues[1] + ", " + rgbValues[2] + ")";
+        }
+        catch(Exception e){
+            Toast.makeText(this, "Error converting hex to rgb", Toast.LENGTH_LONG).show();
+        }
+
+        //Returns the string. If there is some error on converting the hex to rgb, the hex will be returned
+        return rgbString;
+    }
+
 }
