@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 
-
 public class EditColorActivity extends Activity implements View.OnClickListener, SensorEventListener {
     private LinearLayout colorDisplay;
     private Sensor sensorOrientation;
@@ -47,8 +46,8 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         else{
             setTheme(R.style.LightTheme);
         }
-
         setContentView(R.layout.activity_edit_color);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
@@ -58,9 +57,6 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         Intent i = getIntent();
         originalColor = i.getStringExtra("EDIT_COLOR");
         colorColumn = i.getStringExtra("COLOR_COLUMN");
-
-        Log.d("EditColor", originalColor + " " + colorColumn);
-
         try{
             currentColor = Color.parseColor("#" + originalColor);
         }
@@ -68,7 +64,6 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
             Toast.makeText(this, "Error parsing color", Toast.LENGTH_SHORT).show();
             currentColor = Color.parseColor("#123123");
         }
-
         hexColor = originalColor;
         colorName.setText("#" + originalColor);
 
@@ -126,12 +121,13 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
                 startActivity(i);
             }
             else{
-                Log.d("EditColor", String.format("%d",currentColor));
-
-                //String hexColor =
                 Log.d("EditColor", "New Color: " + hexColor);
+                Intent i = new Intent();
+                i.putExtra("EDITED_COLOR", hexColor);
+                i.putExtra("COLOR_COLUMN", colorColumn);
+                setResult(RESULT_OK, i);
+                finish();
             }
-
         }
 
     }

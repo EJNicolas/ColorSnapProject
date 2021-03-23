@@ -170,10 +170,11 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_COLOR_CODE){
             if(resultCode == RESULT_OK){
-                if(data.hasExtra("WORD")){
-                    String editedColor = data.getExtras().getString("EDIT_COLOR");
+                if(data.hasExtra("EDITED_COLOR")){
+                    String editedColor = data.getExtras().getString("EDITED_COLOR");
                     String colorColumn = data.getExtras().getString("COLOR_COLUMN");
                     Constants.dbColorSchemes.editColor(colorSchemeId, colorColumn ,editedColor);
+                    setColorsView();
                 }
             }
         }
