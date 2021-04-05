@@ -7,31 +7,67 @@
     android:orientation="vertical"
     android:background="?attr/bgColor">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Camera Activity"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:textColor="?attr/textColor"/>
-
-    <Button
-        android:id="@+id/buttonEditColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Edit color" />
-
-    <ImageView
-        android:id="@+id/imageView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="201dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/cameraBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="open Camera" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="?attr/bgColor"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera Activity"
+                android:layout_gravity="center"
+                android:textSize="30sp"
+                android:textColor="?attr/textColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick a color by tapping a location on the image"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:textColor="?attr/textColor"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chosen color"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="?attr/textColor"
+                android:layout_marginTop="30dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                android:id="@+id/linearLayoutColorPick"/>
+
+
+            <Button
+                android:id="@+id/buttonEditColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Continue" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
