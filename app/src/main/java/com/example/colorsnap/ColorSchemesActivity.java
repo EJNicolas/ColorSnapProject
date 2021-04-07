@@ -68,9 +68,9 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
     public void setRecyclerViewColorSchemes(){
         //Create cursor to get all the rows from the database
         Cursor cursor;
+        //Get all the data from the names column
         cursor = Constants.dbColorSchemes.getData();
 
-        //Get all the data from the names column
         int nameColumn = cursor.getColumnIndex(Constants.NAME);
 
 //        Might be used later to display the color scheme in the activity

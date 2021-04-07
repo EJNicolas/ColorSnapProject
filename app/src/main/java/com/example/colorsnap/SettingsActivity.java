@@ -2,6 +2,7 @@ package com.example.colorsnap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -117,8 +118,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener, 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putBoolean("darkMode", darkMode);
         editor.putBoolean("usingRGB", rgbDisplay);
-        Toast.makeText(this, "Reset app to view changes", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
         editor.commit();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 

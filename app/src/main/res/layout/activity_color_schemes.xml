@@ -24,7 +24,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:id="@+id/editTextSearchName"
-            android:textColor="?attr/textColor"/>
+            android:textColor="?attr/textColor"
+            android:hint="Search"/>
 
         <Button
             android:layout_weight="1"
@@ -61,7 +62,8 @@
             android:layout_height="wrap_content"
             android:text="Create New Color Scheme"
             android:layout_gravity="center"
-            android:id="@+id/buttonAddColorScheme" />
+            android:id="@+id/buttonAddColorScheme"
+            android:hint="Color Scheme Name"/>
 
     </LinearLayout>
 
