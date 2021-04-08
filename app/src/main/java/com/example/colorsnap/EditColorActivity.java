@@ -30,6 +30,8 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     private String originalColor, colorColumn, hexColor;
     private TextView colorName;
     private Button buttonSaveColor;
+    private Button buttonChangeColor;
+
     private boolean usingRGB;
 
     @Override
@@ -55,6 +57,8 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
+        buttonChangeColor = (Button) findViewById(R.id.buttonChangeColor);
+
         colorDisplay = (LinearLayout)findViewById(R.id.colorChange);
         colorName = (TextView) findViewById(R.id.textViewEditColor);
 
@@ -73,6 +77,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         colorName.setText("#" + originalColor);
         //Set listeners
         buttonSaveColor.setOnClickListener(this);
+        buttonChangeColor.setOnClickListener(this);
 
         //Look at the user's preferences and see if they prefer seeing colors displayed in rgb or hexadecimal
         sharedPrefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
@@ -85,33 +90,39 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
 
     public void setSaturation(float x, float y, float z) {
         //Initialize variables
+if (buttonChangeColor.isPressed()) {
 
-        int color = currentColor;
-        float[ ] hsv= new float [3];
-        // converting color to hsv
-        Color.colorToHSV(color, hsv);
-        //take in sensor data and change its float value based on position
-        float slope = (float) (1/ 6.28318);
-        float output = (float) (slope * (z + 3.14159));
-        hsv[1] = output;
-        float slopeX = (float) (1/ 6.28318);
-        float outputX = (float) (slopeX * (x + 3.14159));
-        hsv[2] = outputX;
-        int newColor = Color.HSVToColor(hsv);
-        currentColor = newColor;
-        //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
-        hexColor = String.format("%06X", (0xFFFFFF & currentColor));
-        if(usingRGB){
-            colorName.setText(convertHexToRGB(hexColor));
-        }
-        else{
-            colorName.setText("#" + hexColor);
-        }
-        colorDisplay.setBackgroundColor(newColor);
+    Log.d("EditColor", "New Color: " + "Hello");
+
+    int color = currentColor;
+    float[ ] hsv= new float [3];
+    // converting color to hsv
+    Color.colorToHSV(color, hsv);
+    //take in sensor data and change its float value based on position
+    float slope = (float) (1/ (6.28318)/2);
+    float output = (float) (slope * (z + 3.14159/2));
+    hsv[1] = output;
+    float slopeX = (float) (1/ (6.28318)/2);
+    float outputX = (float) (slopeX * (x + 3.14159/2));
+    hsv[2] = outputX;
+    int newColor = Color.HSVToColor(hsv);
+    currentColor = newColor;
+    //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
+    hexColor = String.format("%06X", (0xFFFFFF & currentColor));
+    if(usingRGB){
+        colorName.setText(convertHexToRGB(hexColor));
+    }
+    else{
+        colorName.setText("#" + hexColor);
+    }
+    colorDisplay.setBackgroundColor(newColor);
 
 //        Log.d("zTag", String.valueOf((z)));
 //        Log.d("xTag", String.valueOf((x)));
 //        Log.d("yTag", String.valueOf((y)));
+
+
+}
 
     }
 
@@ -147,7 +158,13 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
                 setResult(RESULT_OK, i);
                 finish();
             }
+
         }
+
+
+
+
+
 
     }
 

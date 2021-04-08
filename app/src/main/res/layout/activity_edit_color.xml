@@ -35,4 +35,10 @@
         android:layout_gravity="center"
         android:id="@+id/buttonSaveColor" />
 
+    <Button
+        android:id="@+id/buttonChangeColor"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 </LinearLayout>
