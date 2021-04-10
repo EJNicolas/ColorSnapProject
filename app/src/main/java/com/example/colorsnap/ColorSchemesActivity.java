@@ -71,6 +71,10 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         else{
             Log.d("NewColor", newColor);
         }
+
+        if(!(newColor==null)){
+            showAlert();
+        }
     }
 
     @Override
@@ -78,22 +82,29 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         //Set recyclerview to see color scheme names. Done on resume to show changes done by searching and deleting.
         super.onResume();
         setRecyclerViewColorSchemes();
+    }
 
-        if(!(newColor==null)){
-            //Creating alert dialogue referenced from https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
-            //Creating dialogue with edit text referenced from https://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog
-            //WHen the user presses the delete button, an alert will pop up which the user needs to confirm to delete the color scheme
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setMessage("Create new Color Scheme");
-            final EditText input = new EditText(alertDialog.getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            input.setLayoutParams(lp);
-            alertDialog.setView(input); // uncomment this line
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Create",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+    public void showAlert(){
+        //Creating alert dialogue referenced from https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
+        //Creating dialogue with edit text referenced from https://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog
+        //WHen the user presses the delete button, an alert will pop up which the user needs to confirm to delete the color scheme
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage("Create new Color Scheme");
+        final EditText input = new EditText(alertDialog.getContext());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input); // uncomment this line
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Create",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        int results = Constants.dbColorSchemes.searchExactName(input.getText().toString());
+                        if(results>=1){
+                            Toast.makeText(alertDialog.getContext(), "Name already used. Please use a different name", Toast.LENGTH_SHORT).show();
+                            showAlert();
+                        }
+                        else{
                             long id = Constants.dbColorSchemes.createRow(input.getText().toString());
                             Intent i = new Intent(alertDialog.getContext(), ViewColorSchemeActivity.class);
                             i.putExtra("COLOR_SCHEME_NAME", input.getText().toString());
@@ -102,16 +113,15 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
                             startActivity(i);
                             dialog.dismiss();
                         }
-                    });
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });;
-            alertDialog.show();
-        }
-
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });;
+        alertDialog.show();
     }
 
     public void setRecyclerViewColorSchemes(){
@@ -177,11 +187,17 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         }
         //Creates a new row in the data base and starts the activity to view the colors in a scheme. Names the row with the name provided on the edit text. Passes the color scheme's name and id for saving in the next activity
         if(buttonAddColorScheme.isPressed()){
-            long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
-            Intent i = new Intent(this, ViewColorSchemeActivity.class);
-            i.putExtra("COLOR_SCHEME_NAME", editTextNameInput.getText().toString());
-            i.putExtra("ROW_ID", id);
-            startActivity(i);
+            int results = Constants.dbColorSchemes.searchExactName(editTextNameInput.getText().toString());
+            if(results>=1){
+                Toast.makeText(this, "Please use a different name", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
+                Intent i = new Intent(this, ViewColorSchemeActivity.class);
+                i.putExtra("COLOR_SCHEME_NAME", editTextNameInput.getText().toString());
+                i.putExtra("ROW_ID", id);
+                startActivity(i);
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
     LinearLayout colorDisplay;
     Bitmap imageBitmap;
     String hexColor;
+    String colorSchemeName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +65,11 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
         buttonEditColor.setOnClickListener(this);
         selectedImage.setOnTouchListener(this);
 
+        Intent i = getIntent();
+        if(!(i==null)){
+            colorSchemeName = i.getStringExtra("COLOR_SCHEME_NAME");
+        }
+
         //Grants permission to access the camera if the correct request code is called
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
@@ -82,6 +88,9 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
         if (buttonEditColor.isPressed()) {
             Intent i = new Intent(this, EditColorActivity.class);
             i.putExtra("EDIT_COLOR", hexColor);
+            if(!(colorSchemeName==null)){
+                i.putExtra("COLOR_SCHEME_NAME", colorSchemeName);
+            }
             startActivity(i);
         }
     }
@@ -91,17 +100,25 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
 
       // if the request code is correct, capture the image from the camera
         if (requestCode == 100) {
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            //selectedImage.setImageBitmap(captureImage);
-            //Strategy of scaling Bitmap from https://stackoverflow.com/questions/4837715/how-to-resize-a-bitmap-in-android
-            selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 900, 1200, false));
+            if(resultCode==RESULT_OK){
+                Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+                //selectedImage.setImageBitmap(captureImage);
+                //Strategy of scaling Bitmap from https://stackoverflow.com/questions/4837715/how-to-resize-a-bitmap-in-android
+                selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 900, 1200, false));
 
-            BitmapDrawable drawable = (BitmapDrawable) selectedImage.getDrawable();
+                BitmapDrawable drawable = (BitmapDrawable) selectedImage.getDrawable();
 
-            imageBitmap = drawable.getBitmap();
+                imageBitmap = drawable.getBitmap();
 
-            Log.d("CoordinateTest", String.format("%d", imageBitmap.getWidth()));
-            Log.d("CoordinateTest", String.format("%d", imageBitmap.getHeight()));
+                Log.d("CoordinateTest", String.format("%d", imageBitmap.getWidth()));
+                Log.d("CoordinateTest", String.format("%d", imageBitmap.getHeight()));
+            }
+            else{
+                Toast.makeText(this, "Camera cancelled. Returning to main menu", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+            }
+
         }
     }
 

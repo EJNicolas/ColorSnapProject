@@ -112,6 +112,15 @@ public class MyDatabase {
         return cursor;
     }
 
+    public int searchExactName(String searchName){
+        //Deletes a row with a specific name
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = {Constants.NAME};
+        String selection = Constants.NAME + "='" +searchName+ "'";
+        Cursor cursor = db.query(Constants.TABLE_NAME, columns , selection, null, null, null, null);
+        return cursor.getCount();
+    }
+
     public int deleteRow(String searchName){
         //Deletes a row with a specific name
         SQLiteDatabase db = helper.getWritableDatabase();

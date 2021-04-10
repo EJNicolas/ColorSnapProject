@@ -97,15 +97,6 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             colorSchemeTitle = i.getStringExtra("COLOR_SCHEME_NAME");
         }
 
-        String newColor = i.getStringExtra("NEW_COLOR");
-        if(newColor == null){
-            Log.d("NewColor", "working as normal");
-        }
-        else{
-            Constants.dbColorSchemes.addColor(colorSchemeId, newColor);
-            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
-        }
-
         textViewColorSchemeTitle.setText(colorSchemeTitle);
 
         //Method to set and display colors on this activity
@@ -113,6 +104,16 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         selectedColor = colorTitle1.getText().toString();
         selectedColumn = Constants.COLOR1;
         textViewSelectedColor.setText(selectedColor);
+
+        String newColor = i.getStringExtra("NEW_COLOR");
+        if(newColor == null){
+            Log.d("NewColor", "working as normal");
+        }
+        else{
+            Constants.dbColorSchemes.addColor(colorSchemeId, newColor);
+            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
+            setColorsView();
+        }
     }
 
     @Override
@@ -127,6 +128,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         //Move to the camera activity
         else if(buttonAddColor.isPressed()){
             Intent i = new Intent(this, CameraActivity.class);
+            i.putExtra("COLOR_SCHEME_NAME", colorSchemeTitle);
             startActivity(i);
         }
         //Takes the string from the edit text and places it in the database as a color. This is temporary as we do not have the camera and color picker working

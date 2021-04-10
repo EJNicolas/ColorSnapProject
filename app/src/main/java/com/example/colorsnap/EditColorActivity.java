@@ -32,6 +32,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     private Button buttonSaveColor;
     private Button buttonChangeColor;
     private boolean usingRGB;
+    private String colorSchemeName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         Intent i = getIntent();
         originalColor = i.getStringExtra("EDIT_COLOR");
         colorColumn = i.getStringExtra("COLOR_COLUMN");
+        colorSchemeName = i.getStringExtra("COLOR_SCHEME_NAME");
         try{
             currentColor = Color.parseColor("#" + originalColor);
         }
@@ -140,8 +142,14 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     public void onClick(View v) {
         if(buttonSaveColor.isPressed()){
             //if a colorColumn didnt come through the intent, this means that this color isnt editing a previously made color
-            if(colorColumn==null){
+            if(colorColumn==null && colorSchemeName==null){
                 Intent i = new Intent(this, ColorSchemesActivity.class);
+                i.putExtra("NEW_COLOR", hexColor);
+                startActivity(i);
+            }
+            else if(!(colorSchemeName==null)){
+                Intent i = new Intent(this, ViewColorSchemeActivity.class);
+                i.putExtra("SAVED_COLOR_SCHEME_NAME", colorSchemeName);
                 i.putExtra("NEW_COLOR", hexColor);
                 startActivity(i);
             }
