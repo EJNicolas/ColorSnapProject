@@ -96,6 +96,16 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         else{
             colorSchemeTitle = i.getStringExtra("COLOR_SCHEME_NAME");
         }
+
+        String newColor = i.getStringExtra("NEW_COLOR");
+        if(newColor == null){
+            Log.d("NewColor", "working as normal");
+        }
+        else{
+            Constants.dbColorSchemes.addColor(colorSchemeId, newColor);
+            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
+        }
+
         textViewColorSchemeTitle.setText(colorSchemeTitle);
 
         //Method to set and display colors on this activity

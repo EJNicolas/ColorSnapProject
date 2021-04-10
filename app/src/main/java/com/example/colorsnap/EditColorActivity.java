@@ -24,14 +24,13 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     // creates the variables needed to store and change the colour displayed as a LinearLayout
 
     private LinearLayout colorDisplay;
-    private Sensor sensorOrientation;
+    private Sensor sensorGyroscope;
     private SensorManager sensorManager = null;
     private int currentColor;
     private String originalColor, colorColumn, hexColor;
     private TextView colorName;
     private Button buttonSaveColor;
     private Button buttonChangeColor;
-
     private boolean usingRGB;
 
     @Override
@@ -55,7 +54,7 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         setContentView(R.layout.activity_edit_color);
         //Initialize variables
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorOrientation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        sensorGyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
         buttonChangeColor = (Button) findViewById(R.id.buttonChangeColor);
 
@@ -74,7 +73,8 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
             currentColor = Color.parseColor("#123123");
         }
         hexColor = originalColor;
-        colorName.setText("#" + originalColor);
+        colorDisplay.setBackgroundColor(currentColor);
+
         //Set listeners
         buttonSaveColor.setOnClickListener(this);
         buttonChangeColor.setOnClickListener(this);
@@ -85,45 +85,40 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
         if(!(sharedPrefs==null)){
             usingRGB = sharedPrefs.getBoolean("usingRGB", false);
         }
+        if(usingRGB){
+            colorName.setText(convertHexToRGB(hexColor));
+        }
+        else{
+            colorName.setText("#" + hexColor);
+        }
 
     }
 
-    public void setSaturation(float x, float y, float z) {
-        //Initialize variables
-if (buttonChangeColor.isPressed()) {
+    public void editColor(float rotX, float rotY){
+        if(buttonChangeColor.isPressed()){
+            int color = currentColor;
+            float[] hsv= new float [3];
+            // converting color to hsv
+            Color.colorToHSV(color, hsv);
 
-    Log.d("EditColor", "New Color: " + "Hello");
+            Log.d("ChangeColor", "Gyro Y: " + String.format("%f", rotY/100));
+            Log.d("ChangeColor", "Gyro X: " + String.format("%f", rotX/100));
 
-    int color = currentColor;
-    float[ ] hsv= new float [3];
-    // converting color to hsv
-    Color.colorToHSV(color, hsv);
-    //take in sensor data and change its float value based on position
-    float slope = (float) (1/ (6.28318)/2);
-    float output = (float) (slope * (z + 3.14159/2));
-    hsv[1] = output;
-    float slopeX = (float) (1/ (6.28318)/2);
-    float outputX = (float) (slopeX * (x + 3.14159/2));
-    hsv[2] = outputX;
-    int newColor = Color.HSVToColor(hsv);
-    currentColor = newColor;
-    //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
-    hexColor = String.format("%06X", (0xFFFFFF & currentColor));
-    if(usingRGB){
-        colorName.setText(convertHexToRGB(hexColor));
-    }
-    else{
-        colorName.setText("#" + hexColor);
-    }
-    colorDisplay.setBackgroundColor(newColor);
+            hsv[1]+=rotY/10;
+            hsv[2]+=rotX/10;
 
-//        Log.d("zTag", String.valueOf((z)));
-//        Log.d("xTag", String.valueOf((x)));
-//        Log.d("yTag", String.valueOf((y)));
-
-
-}
-
+            int newColor = Color.HSVToColor(hsv);
+            currentColor = newColor;
+            //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
+            hexColor = String.format("%06X", (0xFFFFFF & currentColor));
+            if(usingRGB){
+                colorName.setText(convertHexToRGB(hexColor));
+            }
+            else{
+                colorName.setText("#" + hexColor);
+            }
+            colorDisplay.setBackgroundColor(newColor);
+        }
     }
 
 
@@ -131,7 +126,7 @@ if (buttonChangeColor.isPressed()) {
     protected void onResume() {
         //register sensor listener to this class on resume
         super.onResume();
-        sensorManager.registerListener(this,sensorOrientation, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,sensorGyroscope, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -147,6 +142,7 @@ if (buttonChangeColor.isPressed()) {
             //if a colorColumn didnt come through the intent, this means that this color isnt editing a previously made color
             if(colorColumn==null){
                 Intent i = new Intent(this, ColorSchemesActivity.class);
+                i.putExtra("NEW_COLOR", hexColor);
                 startActivity(i);
             }
             //if there is a colorColumn found, then it did come from a made color scheme. This method finishes the startActivityForResult()
@@ -158,32 +154,20 @@ if (buttonChangeColor.isPressed()) {
                 setResult(RESULT_OK, i);
                 finish();
             }
-
         }
-
-
-
-
-
-
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         //display sensor readings
         int type = event.sensor.getType();
-        if(type == Sensor.TYPE_ORIENTATION) {
-            //get values for x and y orientation
-            //orientationX = event.values[0];
-           // orientationY = event.values[1];
-        }
-        try{
-            //display the sensor's information. When there is more than one value in the sensor's reading, make a new line on the text view and display that information.
-            setSaturation(event.values[0], event.values[1],event.values[2]);
-
-        }
-        catch(Exception e){
-            Log.e("SensorDetailsActivity","Error on SensorChanged");
+        if(type == Sensor.TYPE_GYROSCOPE){
+            try{
+                editColor(event.values[0], event.values[1]);
+            }
+            catch(Exception e){
+                Toast.makeText(this, "Error retrieving Gyroscope", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

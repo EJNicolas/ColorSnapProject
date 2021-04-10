@@ -81,6 +81,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
        //If statements for when the edit color button is press to start the edit color activity otherwise if the camera button is pressed, read a toast message and start the camera activity
         if (buttonEditColor.isPressed()) {
             Intent i = new Intent(this, EditColorActivity.class);
+            i.putExtra("EDIT_COLOR", hexColor);
             startActivity(i);
         }
     }
@@ -118,11 +119,9 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
                 Log.d("CoordinateTest", hexColor);
                 colorDisplay.setBackgroundColor(rawColor);
             }
-
             return true;
         }
         else
             return false;
-
     }
 }

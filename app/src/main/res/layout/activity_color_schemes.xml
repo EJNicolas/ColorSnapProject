@@ -54,16 +54,17 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:id="@+id/editTextColorName"
-            android:textColor="?attr/textColor"/>
+            android:textColor="?attr/textColor"
+            android:hint="Color Scheme Name"/>
 
         <Button
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Create New Color Scheme"
+            android:text="Create"
             android:layout_gravity="center"
             android:id="@+id/buttonAddColorScheme"
-            android:hint="Color Scheme Name"/>
+            />
 
     </LinearLayout>
 
