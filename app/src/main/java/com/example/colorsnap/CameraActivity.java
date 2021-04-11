@@ -56,7 +56,6 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
         setContentView(R.layout.activity_camera);
 
         //Initialize variables
-
         selectedImage = findViewById(R.id.imageView);
         buttonEditColor = (Button) findViewById(R.id.buttonEditColor);
         colorDisplay = (LinearLayout) findViewById(R.id.linearLayoutColorPick);
@@ -65,6 +64,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
         buttonEditColor.setOnClickListener(this);
         selectedImage.setOnTouchListener(this);
 
+        //gets the color scheme's name to save to if available
         Intent i = getIntent();
         if(!(i==null)){
             colorSchemeName = i.getStringExtra("COLOR_SCHEME_NAME");
@@ -84,7 +84,7 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
     @Override
     public void onClick(View v) {
 
-       //If statements for when the edit color button is press to start the edit color activity otherwise if the camera button is pressed, read a toast message and start the camera activity
+       //If statement for when the edit color button is press to start the edit color activity. It passes the color the user picks. If its being saved to an existing color scheme, pass its name too.
         if (buttonEditColor.isPressed()) {
             Intent i = new Intent(this, EditColorActivity.class);
             i.putExtra("EDIT_COLOR", hexColor);
@@ -104,14 +104,11 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
                 Bitmap captureImage = (Bitmap) data.getExtras().get("data");
                 //selectedImage.setImageBitmap(captureImage);
                 //Strategy of scaling Bitmap from https://stackoverflow.com/questions/4837715/how-to-resize-a-bitmap-in-android
-                selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 900, 1200, false));
+                selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 800, 1100, false));
 
+                //Getting scaled bitmap to pick colors from
                 BitmapDrawable drawable = (BitmapDrawable) selectedImage.getDrawable();
-
                 imageBitmap = drawable.getBitmap();
-
-                Log.d("CoordinateTest", String.format("%d", imageBitmap.getWidth()));
-                Log.d("CoordinateTest", String.format("%d", imageBitmap.getHeight()));
             }
             else{
                 Toast.makeText(this, "Camera cancelled. Returning to main menu", Toast.LENGTH_SHORT).show();
@@ -124,16 +121,14 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        //when the user presses their finger down on the screen, get their finger's position relative to the image view and get the pixel color from that coordinate. Set this color to the color display
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             int x = (int) event.getX();
             int y = (int) event.getY();
-            Log.d("CoordinateTest", "X Reading: " + String.format("%d", x) + " Y Reading: " + String.format("%d", y) );
 
             if(x < imageBitmap.getWidth() && y < imageBitmap.getHeight()){
                 int rawColor = imageBitmap.getPixel(x,y);
-                Log.d("CoordinateTest", String.format("%d", rawColor));
                 hexColor = String.format("%06X", (0xFFFFFF & rawColor));
-                Log.d("CoordinateTest", hexColor);
                 colorDisplay.setBackgroundColor(rawColor);
             }
             return true;

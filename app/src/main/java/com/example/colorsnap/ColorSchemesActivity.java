@@ -60,18 +60,13 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         buttonAddColorScheme.setOnClickListener(this);
         buttonSearchColorScheme.setOnClickListener(this);
 
+        //Gets the color that was taken from starting on the Camera Activity
         Intent i = getIntent();
         if(!(i==null)){
             newColor = i.getStringExtra("NEW_COLOR");
         }
 
-        if(newColor == null){
-            Log.d("NewColor", "working as normal");
-        }
-        else{
-            Log.d("NewColor", newColor);
-        }
-
+        //if a new color is found, show the alert
         if(!(newColor==null)){
             showAlert();
         }
@@ -87,7 +82,7 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
     public void showAlert(){
         //Creating alert dialogue referenced from https://stackoverflow.com/questions/26097513/android-simple-alert-dialog
         //Creating dialogue with edit text referenced from https://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog
-        //WHen the user presses the delete button, an alert will pop up which the user needs to confirm to delete the color scheme
+        //This creates an alert to tell the user to create a new color scheme to place the color they took from the camera
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setMessage("Create new Color Scheme");
         final EditText input = new EditText(alertDialog.getContext());
@@ -95,10 +90,11 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
-        alertDialog.setView(input); // uncomment this line
+        alertDialog.setView(input);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Create",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        //The user is asked to input a new color scheme name. It searches if a color scheme name was already used. If a name is reused again, the user is asked to enter a different name.
                         int results = Constants.dbColorSchemes.searchExactName(input.getText().toString());
                         if(results>=1){
                             Toast.makeText(alertDialog.getContext(), "Name already used. Please use a different name", Toast.LENGTH_SHORT).show();
@@ -131,13 +127,6 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         cursor = Constants.dbColorSchemes.getData();
 
         int nameColumn = cursor.getColumnIndex(Constants.NAME);
-
-//        Might be used later to display the color scheme in the activity
-//        int colorColumn1 = cursor.getColumnIndex(Constants.COLOR1);
-//        int colorColumn2 = cursor.getColumnIndex(Constants.COLOR2);
-//        int colorColumn3 = cursor.getColumnIndex(Constants.COLOR3);
-//        int colorColumn4 = cursor.getColumnIndex(Constants.COLOR4);
-//        int colorColumn5 = cursor.getColumnIndex(Constants.COLOR5);
 
         //Create ArrayList to put all names in.
         ArrayList<String> mArrayList = new ArrayList<String>();

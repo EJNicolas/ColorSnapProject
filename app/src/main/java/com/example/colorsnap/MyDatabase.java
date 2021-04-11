@@ -113,7 +113,7 @@ public class MyDatabase {
     }
 
     public int searchExactName(String searchName){
-        //Deletes a row with a specific name
+        //Searches a row with a specific name
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.NAME};
         String selection = Constants.NAME + "='" +searchName+ "'";

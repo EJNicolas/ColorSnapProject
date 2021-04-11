@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 public class EditColorActivity extends Activity implements View.OnClickListener, SensorEventListener {
 
     // creates the variables needed to store and change the colour displayed as a LinearLayout
-
     private LinearLayout colorDisplay;
     private Sensor sensorGyroscope;
     private SensorManager sensorManager = null;
@@ -97,18 +96,17 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     }
 
     public void editColor(float rotX, float rotY){
+        //Method used to handle editing the color. This only happens while the button to change color is continously held down.
         if(buttonChangeColor.isPressed()){
             int color = currentColor;
             float[] hsv= new float [3];
             // converting color to hsv
             Color.colorToHSV(color, hsv);
-
-            Log.d("ChangeColor", "Gyro Y: " + String.format("%f", rotY/100));
-            Log.d("ChangeColor", "Gyro X: " + String.format("%f", rotX/100));
-
+            //Change the saturation and brightness according to how much the user rotates their phone
             hsv[1]+=rotY/10;
             hsv[2]+=rotX/10;
 
+            //Changes the HSV back to a color value for us to save
             int newColor = Color.HSVToColor(hsv);
             currentColor = newColor;
             //Converting Color to String learned from https://stackoverflow.com/questions/6539879/how-to-convert-a-color-integer-to-a-hex-string-in-android
@@ -141,21 +139,21 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         if(buttonSaveColor.isPressed()){
-            //if a colorColumn didnt come through the intent, this means that this color isnt editing a previously made color
+            //if a colorColumn didnt come through the intent and no color scheme nave to save to, this means that this color isnt editing a previously made color (came from the camera at the start)
             if(colorColumn==null && colorSchemeName==null){
                 Intent i = new Intent(this, ColorSchemesActivity.class);
                 i.putExtra("NEW_COLOR", hexColor);
                 startActivity(i);
             }
+            //If there is a color scheme name found, it goes to that activity to save this color (adding a color to a color scheme)
             else if(!(colorSchemeName==null)){
                 Intent i = new Intent(this, ViewColorSchemeActivity.class);
                 i.putExtra("SAVED_COLOR_SCHEME_NAME", colorSchemeName);
                 i.putExtra("NEW_COLOR", hexColor);
                 startActivity(i);
             }
-            //if there is a colorColumn found, then it did come from a made color scheme. This method finishes the startActivityForResult()
+            //if there is a colorColumn found, then it did come from a made color scheme. This method finishes the startActivityForResult() (editing a color from a color scheme)
             else{
-                Log.d("EditColor", "New Color: " + hexColor);
                 Intent i = new Intent();
                 i.putExtra("EDITED_COLOR", hexColor);
                 i.putExtra("COLOR_COLUMN", colorColumn);
@@ -167,8 +165,9 @@ public class EditColorActivity extends Activity implements View.OnClickListener,
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        //display sensor readings
+        //set sensor
         int type = event.sensor.getType();
+        //Use the Gyroscope and pass the readings to edit the color
         if(type == Sensor.TYPE_GYROSCOPE){
             try{
                 editColor(event.values[0], event.values[1]);
