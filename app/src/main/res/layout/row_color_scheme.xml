@@ -2,29 +2,82 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="?attr/bgColor">
+    android:orientation="vertical"
+    android:background="?attr/bgColor"
+    android:layout_marginBottom="20dp">
 
-    <TextView
-        android:layout_weight="4"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:paddingLeft="20dp"
-        android:layout_marginBottom="5dp"
-        android:text="test"
-        android:textSize="40sp"
-        android:id="@+id/textViewRowColorName"
-        android:textColor="?attr/textColor"
-        />
 
-    <Button
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:text="Delete"
-        android:layout_gravity="center_vertical"
-        android:backgroundTint="@color/red"
-        android:id="@+id/buttonDeleteColorScheme"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?attr/bgColor">
+
+        <TextView
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="test"
+            android:textSize="30sp"
+            android:id="@+id/textViewRowColorName"
+            android:textColor="?attr/textColor"
+            />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:text="Delete"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/red"
+            android:id="@+id/buttonDeleteColorScheme"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="?attr/bgColor">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:id="@+id/schemeColor1"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:id="@+id/schemeColor2"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:id="@+id/schemeColor3"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:id="@+id/schemeColor4"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="0"
+            android:id="@+id/schemeColor5"
+            android:orientation="horizontal"/>
+
+    </LinearLayout>
 
 </LinearLayout>
