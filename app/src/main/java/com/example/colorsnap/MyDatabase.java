@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 //Class for holding methods the database is capable of doing. These include adding rows, editing data, deleting data and queries
 //Reused/repurposed code from Unit 6 PlantDataBaseRecyclerView project

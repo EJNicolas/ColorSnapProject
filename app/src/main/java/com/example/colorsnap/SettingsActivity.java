@@ -14,7 +14,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 
 //Activity for user settings
 public class SettingsActivity extends Activity implements View.OnClickListener, ToggleButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {

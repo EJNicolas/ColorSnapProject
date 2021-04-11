@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
 //Activity to display colors within a color scheme.
 public class ViewColorSchemeActivity extends Activity implements View.OnClickListener {
 
