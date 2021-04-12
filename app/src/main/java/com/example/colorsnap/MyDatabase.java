@@ -4,7 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
+
+import java.util.ArrayList;
+
 //Class for holding methods the database is capable of doing. These include adding rows, editing data, deleting data and queries
 //Reused/repurposed code from Unit 6 PlantDataBaseRecyclerView project
 public class MyDatabase {
@@ -101,7 +105,10 @@ public class MyDatabase {
         SQLiteDatabase db = helper.getWritableDatabase();
         String[] columns = {Constants.UID, Constants.NAME, Constants.COLOR1, Constants.COLOR2, Constants.COLOR3, Constants.COLOR4, Constants.COLOR5};
         String selection = Constants.NAME + "='" +searchName+ "'";
-        Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, null, null, null, null);
+        //https://stackoverflow.com/questions/9076561/android-sqlitedatabase-query-with-like referenced for better search query
+        Cursor cursor = db.query(true, Constants.TABLE_NAME, columns, Constants.NAME + " LIKE ?",
+                new String[] { searchName+"%" }, null, null, null,
+                null);
         return cursor;
     }
 

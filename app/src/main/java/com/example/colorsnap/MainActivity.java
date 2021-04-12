@@ -1,10 +1,14 @@
 package com.example.colorsnap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +48,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonCamera.setOnClickListener(this);
         buttonColorSchemes.setOnClickListener(this);
         buttonSettings.setOnClickListener(this);
+
+        //Grants permission to access the camera if the correct request code is called
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
+        }
 
         Constants.dbColorSchemes = new MyDatabase(this);
     }

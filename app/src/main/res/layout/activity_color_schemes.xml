@@ -35,7 +35,8 @@
             android:textAllCaps="false"
             android:layout_marginLeft="10dp"
             android:id="@+id/editTextSearchName"
-            android:textColor="?attr/textColor"/>
+            android:textColor="?attr/textColor"
+            android:hint="Search"/>
 
         <Button
             android:id="@+id/buttonSearchColorScheme"
