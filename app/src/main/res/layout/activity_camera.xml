@@ -35,7 +35,7 @@
         android:textColor="?attr/textColor"/>
 
 
-    
+
 
 
             <ImageView
@@ -48,14 +48,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chosen color"
+                android:text="Chosen Color"
                 android:layout_gravity="center"
+                android:textFontWeight="600"
+                android:fontFamily="@font/poppins"
                 android:textSize="20sp"
                 android:textColor="?attr/textColor"
                 android:layout_marginTop="30dp"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+
+
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="290dp"
+                android:layout_gravity="center"
+
                 android:layout_height="150dp"
                 android:orientation="vertical"
                 android:id="@+id/linearLayoutColorPick"/>
@@ -69,9 +77,10 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/poppins"
             android:text="Edit Color"
-            android:textFontWeight="600"
             android:textAllCaps="false"
-            app:backgroundTint="#567DF4" />
+            android:textFontWeight="600"
+            android:textColor="@color/white"
+            android:backgroundTint="#567DF4" />
 
 
         </LinearLayout>
