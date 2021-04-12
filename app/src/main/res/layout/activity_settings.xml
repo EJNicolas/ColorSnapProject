@@ -114,16 +114,16 @@
     </ScrollView>
 
     <Button
-        android:textAllCaps="false"
         android:id="@+id/buttonSaveSettings"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:text="Save Settings"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textFontWeight="600"
-        app:backgroundTint="#567DF4" />
+        android:backgroundTint="#567DF4" />
 
 
 </LinearLayout>

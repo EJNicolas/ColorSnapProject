@@ -17,20 +17,29 @@
             android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:paddingLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
             android:text="test"
-            android:textSize="30sp"
+            android:fontFamily="@font/poppins"
+            android:textFontWeight="600"
+
+            android:textSize="20sp"
             android:id="@+id/textViewRowColorName"
             android:textColor="?attr/textColor"
             />
 
         <Button
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_width="20dp"
+            android:layout_height="45dp"
             android:text="Delete"
+            android:layout_marginRight="18dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/poppins"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+
+            android:textFontWeight="500"
             android:backgroundTint="@color/red"
             android:id="@+id/buttonDeleteColorScheme"
             />
@@ -40,6 +49,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="20dp"
         android:orientation="horizontal"
         android:background="?attr/bgColor">
 

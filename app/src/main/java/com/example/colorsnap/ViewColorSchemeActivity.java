@@ -21,8 +21,7 @@ import androidx.annotation.Nullable;
 public class ViewColorSchemeActivity extends Activity implements View.OnClickListener {
 
     //Create variables
-    private Button buttonEditColor, buttonAddColor, buttonSearchColor, buttonSaveColor;
-    private EditText tempColor;
+    private Button buttonEditColor, buttonAddColor, buttonSearchColor;
     private TextView textViewColorSchemeTitle, textViewSelectedColor;
     private String colorSchemeTitle;
     private String[] colors = new String[5];
@@ -56,8 +55,6 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         buttonEditColor = (Button) findViewById(R.id.buttonEditColor);
         buttonAddColor = (Button) findViewById(R.id.buttonAddColor);
         buttonSearchColor = (Button) findViewById(R.id.buttonSearchColor);
-        buttonSaveColor = (Button) findViewById(R.id.buttonSaveColor);
-        tempColor = (EditText) findViewById(R.id.editTextColorInput);
         textViewColorSchemeTitle = (TextView) findViewById(R.id.textViewColorSchemeTitle);
         textViewSelectedColor = (TextView) findViewById(R.id.textViewSelectedColor);
 
@@ -76,7 +73,6 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         buttonEditColor.setOnClickListener(this);
         buttonAddColor.setOnClickListener(this);
         buttonSearchColor.setOnClickListener(this);
-        buttonSaveColor.setOnClickListener(this);
         color1.setOnClickListener(this);
         color2.setOnClickListener(this);
         color3.setOnClickListener(this);
@@ -127,12 +123,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             startActivity(i);
         }
         //Takes the string from the edit text and places it in the database as a color. This is temporary as we do not have the camera and color picker working
-        else if(buttonSaveColor.isPressed()){
-            String input = tempColor.getText().toString();
-            Constants.dbColorSchemes.addColor(colorSchemeId, input);
-            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
-            setColorsView();
-        }
+
         //Takes user to a website which tells them more information about the color they selected
         else if(buttonSearchColor.isPressed()){
             Uri webpage = Uri.parse("https://coolors.co/" + selectedColor);

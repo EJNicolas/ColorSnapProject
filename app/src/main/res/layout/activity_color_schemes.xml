@@ -7,18 +7,30 @@
     android:orientation="vertical"
     android:background="?attr/bgColor">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Color Schemes"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:fontFamily="@font/poppins"
-        android:textFontWeight="650"
-        android:textAllCaps="false"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="20dp"
-        android:textColor="?attr/textColor"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+    >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="50dp"
+                android:fontFamily="@font/poppins"
+                android:text="Color Schemes"
+                android:textAllCaps="false"
+                android:textColor="?attr/textColor"
+                android:textFontWeight="650"
+                android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +47,7 @@
             android:textAllCaps="false"
             android:layout_marginLeft="10dp"
             android:id="@+id/editTextSearchName"
-            android:textColor="?attr/textColor"
+            android:textColorHint="?attr/textColor"
             android:hint="Search"/>
 
         <Button
@@ -47,9 +59,10 @@
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
             android:text="Search"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textFontWeight="650"
-            app:backgroundTint="#567DF4" />
+            android:backgroundTint="#567DF4" />
 
     </LinearLayout>
 
@@ -78,7 +91,7 @@
             android:layout_marginLeft="10dp"
 
             android:id="@+id/editTextColorName"
-            android:textColor="?attr/textColor"
+            android:textColorHint="?attr/textColor"
             android:hint="Color Scheme Name"/>
 
         <Button
@@ -90,12 +103,13 @@
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
             android:text="Create New Color Scheme"
-            android:textAllCaps="false"
+            android:textColor="@color/white"
 
+            android:textAllCaps="false"
             android:textFontWeight="650"
-            app:backgroundTint="#567DF4" />
+            android:backgroundTint="#567DF4" />
 
     </LinearLayout>
-
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
