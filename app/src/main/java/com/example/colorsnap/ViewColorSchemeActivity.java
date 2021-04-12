@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import org.w3c.dom.Text;
 
 //Activity to display colors within a color scheme.
 public class ViewColorSchemeActivity extends Activity implements View.OnClickListener {
@@ -96,6 +93,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         else{
             colorSchemeTitle = i.getStringExtra("COLOR_SCHEME_NAME");
         }
+
         textViewColorSchemeTitle.setText(colorSchemeTitle);
 
         //Method to set and display colors on this activity
@@ -103,6 +101,14 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         selectedColor = colorTitle1.getText().toString();
         selectedColumn = Constants.COLOR1;
         textViewSelectedColor.setText(selectedColor);
+
+        //Add the new color that was taken from the camera
+        String newColor = i.getStringExtra("NEW_COLOR");
+        if(!(newColor==null)){
+            Constants.dbColorSchemes.addColor(colorSchemeId, newColor);
+            Toast.makeText(this, "Color added",Toast.LENGTH_LONG).show();
+            setColorsView();
+        }
     }
 
     @Override
@@ -117,6 +123,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         //Move to the camera activity
         else if(buttonAddColor.isPressed()){
             Intent i = new Intent(this, CameraActivity.class);
+            i.putExtra("COLOR_SCHEME_NAME", colorSchemeTitle);
             startActivity(i);
         }
         //Takes the string from the edit text and places it in the database as a color. This is temporary as we do not have the camera and color picker working
@@ -214,7 +221,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             if(usingRGB)
                 colorTitle1.setText(convertHexToRGB(colors[0]));
             else
-                colorTitle1.setText(colors[0]);
+                colorTitle1.setText("#" + colors[0]);
 
             try{
                 color1.setPadding(0,0, 0, colorSize);
@@ -228,7 +235,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             if(usingRGB)
                 colorTitle2.setText(convertHexToRGB(colors[1]));
             else
-                colorTitle2.setText(colors[1]);
+                colorTitle2.setText("#" + colors[1]);
 
             try{
                 color2.setPadding(0,0, 0, colorSize);
@@ -242,7 +249,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             if(usingRGB)
                 colorTitle3.setText(convertHexToRGB(colors[2]));
             else
-                colorTitle3.setText(colors[2]);
+                colorTitle3.setText("#" + colors[2]);
 
             try{
                 color3.setPadding(0,0, 0, colorSize);
@@ -256,7 +263,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             if(usingRGB)
                 colorTitle4.setText(convertHexToRGB(colors[3]));
             else
-                colorTitle4.setText(colors[3]);
+                colorTitle4.setText("#" + colors[3]);
 
             try{
                 color4.setPadding(0,0, 0, colorSize);
@@ -270,7 +277,7 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
             if(usingRGB)
                 colorTitle5.setText(convertHexToRGB(colors[4]));
             else
-                colorTitle5.setText(colors[4]);
+                colorTitle5.setText("#" + colors[4]);
 
             try{
                 color5.setPadding(0,0, 0, colorSize);

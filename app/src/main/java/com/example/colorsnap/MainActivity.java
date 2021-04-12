@@ -12,8 +12,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 //Activity for the main menu. Mainly used for navigation to other activities
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonColorSchemes.setOnClickListener(this);
         buttonSettings.setOnClickListener(this);
 
-        //Grants permission to access the camera if the correct request code is called
+        //Grants permission to access the camera when the app is started
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
         }
 
+        //creates a new database
         Constants.dbColorSchemes = new MyDatabase(this);
     }
 
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent i = new Intent(this, SettingsActivity.class);
             startActivity(i);
         }
-
 
     }
 }

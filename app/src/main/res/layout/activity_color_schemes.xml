@@ -78,7 +78,8 @@
             android:layout_marginLeft="10dp"
 
             android:id="@+id/editTextColorName"
-            android:textColor="?attr/textColor"/>
+            android:textColor="?attr/textColor"
+            android:hint="Color Scheme Name"/>
 
         <Button
             android:id="@+id/buttonAddColorScheme"

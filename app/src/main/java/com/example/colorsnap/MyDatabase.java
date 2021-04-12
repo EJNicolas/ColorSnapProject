@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 //Class for holding methods the database is capable of doing. These include adding rows, editing data, deleting data and queries
 //Reused/repurposed code from Unit 6 PlantDataBaseRecyclerView project
@@ -110,6 +106,15 @@ public class MyDatabase {
                 new String[] { searchName+"%" }, null, null, null,
                 null);
         return cursor;
+    }
+
+    public int searchExactName(String searchName){
+        //Searches a row with a specific name
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = {Constants.NAME};
+        String selection = Constants.NAME + "='" +searchName+ "'";
+        Cursor cursor = db.query(Constants.TABLE_NAME, columns , selection, null, null, null, null);
+        return cursor.getCount();
     }
 
     public int deleteRow(String searchName){
