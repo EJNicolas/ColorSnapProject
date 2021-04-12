@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/bgColor">
@@ -11,6 +13,11 @@
         android:text="Color Schemes"
         android:layout_gravity="center"
         android:textSize="30sp"
+        android:fontFamily="@font/poppins"
+        android:textFontWeight="650"
+        android:textAllCaps="false"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
         android:textColor="?attr/textColor"/>
 
     <LinearLayout
@@ -23,16 +30,25 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/poppins"
+            android:textFontWeight="650"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
             android:id="@+id/editTextSearchName"
             android:textColor="?attr/textColor"/>
 
         <Button
-            android:layout_weight="1"
+            android:id="@+id/buttonSearchColorScheme"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Search"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:id="@+id/buttonSearchColorScheme" />
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:text="Search"
+            android:textAllCaps="false"
+            android:textFontWeight="650"
+            app:backgroundTint="#567DF4" />
 
     </LinearLayout>
 
@@ -40,6 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/poppins"
+        android:layout_marginLeft="10dp"
+        android:textAllCaps="false"
         android:id="@+id/recyclerViewColorScheme"/>
 
     <LinearLayout
@@ -52,16 +71,27 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/poppins"
+            android:textFontWeight="650"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+
             android:id="@+id/editTextColorName"
             android:textColor="?attr/textColor"/>
 
         <Button
-            android:layout_weight="1"
+            android:id="@+id/buttonAddColorScheme"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Create New Color Scheme"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:id="@+id/buttonAddColorScheme" />
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins"
+            android:text="Create New Color Scheme"
+            android:textAllCaps="false"
+
+            android:textFontWeight="650"
+            app:backgroundTint="#567DF4" />
 
     </LinearLayout>
 

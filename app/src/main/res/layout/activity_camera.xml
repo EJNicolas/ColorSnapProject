@@ -11,16 +11,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Camera Activity"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:textSize="30sp"
+        android:textFontWeight="600"
+        android:fontFamily="@font/poppins"
+        android:layout_marginBottom="20dp"
         android:textColor="?attr/textColor"/>
 
     <Button
         android:id="@+id/buttonEditColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:text="Edit color" />
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/poppins"
+        android:text="Edit Color"
+        android:textFontWeight="600"
+        android:textAllCaps="false"
+        app:backgroundTint="#567DF4" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -30,8 +39,14 @@
 
     <Button
         android:id="@+id/cameraBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="open Camera" />
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/poppins"
+        android:textAllCaps="false"
+        android:text="Open Camera"
+        android:textFontWeight="600"
+        app:backgroundTint="#567DF4" />
 
 </LinearLayout>

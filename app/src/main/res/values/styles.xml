@@ -11,5 +11,7 @@
         <item name="textColor">#ffffff</item>
         <item name="metaTextColor">#aeaeae</item>
         <item name="bgColor">#2C2C2C</item>
+        <item name="android:fontFamily">@font/poppins</item>
+
     </style>
 </resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/baseLayout"
@@ -10,8 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Settings"
+        android:layout_marginTop="80dp"
         android:layout_gravity="center"
         android:textSize="30sp"
+
+        android:fontFamily="@font/poppins"
+        android:textFontWeight="750"
+        android:layout_marginBottom="20dp"
         android:textColor="?attr/textColor"/>
 
     <ScrollView
@@ -35,13 +42,21 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:text="Dark Mode"
-                    android:textSize="25sp"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="17sp"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:textFontWeight="650"
+
+                    android:textAllCaps="false"
                     android:textColor="?attr/textColor"/>
 
                 <ToggleButton
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:fontFamily="@font/poppins"
+
                     android:id="@+id/toggleDarkMode"/>
             </LinearLayout>
 
@@ -55,7 +70,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Default Color Code Display"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/poppins"
+                    android:textFontWeight="650"
+                    android:textAllCaps="false"
+                    android:layout_marginLeft="10dp"
+
                     android:textColor="?attr/textColor"/>
 
                 <RadioGroup
@@ -68,8 +88,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:text="Hexadecimal (#1122AA)"
+                        android:textSize="12sp"
+
                         android:layout_marginBottom="30dp"
                         android:id="@+id/radioHex"
+                        android:fontFamily="@font/poppins"
                         android:checked="true"
                         android:textColor="?attr/metaTextColor"/>
 
@@ -77,6 +100,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:text="RGB(0-255,0-255,0-255)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins"
                         android:layout_marginBottom="30dp"
                         android:id="@+id/radioRGB"
                         android:textColor="?attr/metaTextColor"/>
@@ -87,16 +112,18 @@
 
         </LinearLayout>
     </ScrollView>
-    
+
     <Button
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Save settings"
-        android:layout_gravity="center"
+        android:textAllCaps="false"
         android:id="@+id/buttonSaveSettings"
-        android:backgroundTint="@color/purple_500"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="Save Settings"
         android:textColor="@color/white"
-        />
+        android:textFontWeight="600"
+        app:backgroundTint="#567DF4" />
 
 
 </LinearLayout>
