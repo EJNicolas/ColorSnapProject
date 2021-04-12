@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/bgColor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,37 +34,9 @@
         android:layout_marginBottom="20dp"
         android:textColor="?attr/textColor"/>
 
-    <Button
-        android:id="@+id/buttonEditColor"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/poppins"
-        android:text="Edit Color"
-        android:textFontWeight="600"
-        android:textAllCaps="false"
-        app:backgroundTint="#567DF4" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Camera Activity"
-                android:layout_gravity="center"
-                android:textSize="30sp"
-                android:textColor="?attr/textColor"/>
+    
 
-    <Button
-        android:id="@+id/cameraBtn"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/poppins"
-        android:textAllCaps="false"
-        android:text="Open Camera"
-        android:textFontWeight="600"
-        app:backgroundTint="#567DF4" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -74,15 +61,23 @@
                 android:id="@+id/linearLayoutColorPick"/>
 
 
-            <Button
-                android:id="@+id/buttonEditColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Continue" />
+        <Button
+            android:id="@+id/buttonEditColor"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins"
+            android:text="Edit Color"
+            android:textFontWeight="600"
+            android:textAllCaps="false"
+            app:backgroundTint="#567DF4" />
+
 
         </LinearLayout>
+
 
     </ScrollView>
 
 </LinearLayout>
+
