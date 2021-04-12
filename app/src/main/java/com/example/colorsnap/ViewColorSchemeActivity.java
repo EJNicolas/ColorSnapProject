@@ -309,4 +309,19 @@ public class ViewColorSchemeActivity extends Activity implements View.OnClickLis
         return rgbString;
     }
 
+    public void moveToCamera(View v){
+        Intent i = new Intent(this, CameraActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToColorSchemes(View v){
+        Intent i = new Intent(this, ColorSchemesActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToSettings(View v){
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
+    }
+
 }

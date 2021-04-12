@@ -106,27 +106,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     1.0f
             );
 
-            //If the color at a column isnt null, set the LinearLayout's weight to 1 and set the background color to it
-            //Because we are using weights, the layout's size will change according to how many colors there are in a color scheme
-            if(!colors[0].equals("null")){
-                schemeColor1.setLayoutParams(param);
-                schemeColor1.setBackgroundColor(Color.parseColor("#" + colors[0].toString()));
+            try{
+                //If the color at a column isnt null, set the LinearLayout's weight to 1 and set the background color to it
+                //Because we are using weights, the layout's size will change according to how many colors there are in a color scheme
+                if(!colors[0].equals("null")){
+                    schemeColor1.setLayoutParams(param);
+                    schemeColor1.setBackgroundColor(Color.parseColor("#" + colors[0].toString()));
+                }
+                if(!colors[1].equals("null")){
+                    schemeColor2.setLayoutParams(param);
+                    schemeColor2.setBackgroundColor(Color.parseColor("#" + colors[1].toString()));
+                }
+                if(!colors[2].equals("null")){
+                    schemeColor3.setLayoutParams(param);
+                    schemeColor3.setBackgroundColor(Color.parseColor("#" + colors[2].toString()));
+                }
+                if(!colors[3].equals("null")){
+                    schemeColor4.setLayoutParams(param);
+                    schemeColor4.setBackgroundColor(Color.parseColor("#" + colors[3].toString()));
+                }
+                if(!colors[4].equals("null")){
+                    schemeColor5.setLayoutParams(param);
+                    schemeColor5.setBackgroundColor(Color.parseColor("#" + colors[4].toString()));
+                }
             }
-            if(!colors[1].equals("null")){
-                schemeColor2.setLayoutParams(param);
-                schemeColor2.setBackgroundColor(Color.parseColor("#" + colors[1].toString()));
-            }
-            if(!colors[2].equals("null")){
-                schemeColor3.setLayoutParams(param);
-                schemeColor3.setBackgroundColor(Color.parseColor("#" + colors[2].toString()));
-            }
-            if(!colors[3].equals("null")){
-                schemeColor4.setLayoutParams(param);
-                schemeColor4.setBackgroundColor(Color.parseColor("#" + colors[3].toString()));
-            }
-            if(!colors[4].equals("null")){
-                schemeColor5.setLayoutParams(param);
-                schemeColor5.setBackgroundColor(Color.parseColor("#" + colors[4].toString()));
+            catch(Exception e){
+                Toast.makeText(myLayout.getContext(), "Error parsing color", Toast.LENGTH_LONG).show();
             }
         }
 
