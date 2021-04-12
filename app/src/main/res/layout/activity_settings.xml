@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,28 +8,28 @@
     android:id="@+id/baseLayout"
     android:background="?attr/bgColor">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:layout_marginTop="80dp"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-
-        android:fontFamily="@font/poppins"
-        android:textFontWeight="750"
-        android:layout_marginBottom="20dp"
-        android:textColor="?attr/textColor"/>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:layout_marginTop="80dp"
+                android:layout_gravity="center"
+                android:textSize="30sp"
+                android:fontFamily="@font/poppins"
+                android:textFontWeight="750"
+                android:layout_marginBottom="20dp"
+                android:textColor="?attr/textColor"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="Hexadecimal (#1122AA)"
+                        android:text="Hexadecimal"
                         android:textSize="12sp"
 
                         android:layout_marginBottom="30dp"
@@ -99,31 +99,86 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="RGB(0-255,0-255,0-255)"
+                        android:text="RGB()"
                         android:textSize="12sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginBottom="30dp"
                         android:id="@+id/radioRGB"
                         android:textColor="?attr/metaTextColor"/>
                 </RadioGroup>
-
-
             </LinearLayout>
 
+            <Button
+                android:id="@+id/buttonSaveSettings"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="Save Settings"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textFontWeight="600"
+                android:backgroundTint="#567DF4" />
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/buttonSaveSettings"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="Save Settings"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textFontWeight="600"
-        android:backgroundTint="#567DF4" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="#9289FC">
+
+        <Button
+            android:id="@+id/buttonCamera"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#9289FC"
+            android:fontFamily="@font/poppins"
+            android:onClick="moveToCamera"
+            android:text="Camera"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textFontWeight="600"
+            android:textSize="13sp"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/buttonColorSchemes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#9289FC"
+            android:fontFamily="@font/poppins"
+            android:onClick="moveToColorSchemes"
+            android:text="Saved Colors"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textFontWeight="600"
+            android:textSize="13sp"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <Button
+            android:id="@+id/buttonSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#9289FC"
+            android:fontFamily="@font/poppins"
+            android:onClick="moveToSettings"
+            android:text="Settings"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textFontWeight="600"
+            android:textSize="13sp"
+            style="?android:attr/borderlessButtonStyle" />
+
+    </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

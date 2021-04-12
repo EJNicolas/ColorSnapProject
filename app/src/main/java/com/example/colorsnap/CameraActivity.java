@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
@@ -77,18 +78,22 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
 
     }
 
-
     @Override
     public void onClick(View v) {
 
        //If statement for when the edit color button is press to start the edit color activity. It passes the color the user picks. If its being saved to an existing color scheme, pass its name too.
         if (buttonEditColor.isPressed()) {
-            Intent i = new Intent(this, EditColorActivity.class);
-            i.putExtra("EDIT_COLOR", hexColor);
-            if(!(colorSchemeName==null)){
-                i.putExtra("COLOR_SCHEME_NAME", colorSchemeName);
+            if(hexColor==null){
+                Toast.makeText(this, "Please a select a color by touching a location on the image", Toast.LENGTH_SHORT).show();
             }
-            startActivity(i);
+            else{
+                Intent i = new Intent(this, EditColorActivity.class);
+                i.putExtra("EDIT_COLOR", hexColor);
+                if(!(colorSchemeName==null)){
+                    i.putExtra("COLOR_SCHEME_NAME", colorSchemeName);
+                }
+                startActivity(i);
+            }
         }
     }
 
@@ -101,7 +106,13 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
                 Bitmap captureImage = (Bitmap) data.getExtras().get("data");
                 //selectedImage.setImageBitmap(captureImage);
                 //Strategy of scaling Bitmap from https://stackoverflow.com/questions/4837715/how-to-resize-a-bitmap-in-android
-                selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 800, 1100, false));
+                //Checking orientation for portrait or landscape referenced from https://stackoverflow.com/questions/3674933/find-out-if-android-device-is-portrait-or-landscape-for-normal-usage
+                if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                    selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 800, 1100, false));
+                }
+                else{
+                    selectedImage.setImageBitmap(Bitmap.createScaledBitmap(captureImage, 1100, 800, false));
+                }
 
                 //Getting scaled bitmap to pick colors from
                 BitmapDrawable drawable = (BitmapDrawable) selectedImage.getDrawable();
@@ -132,5 +143,20 @@ public class CameraActivity extends Activity implements View.OnClickListener, Vi
         }
         else
             return false;
+    }
+
+    public void moveToCamera(View v){
+        Intent i = new Intent(this, CameraActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToColorSchemes(View v){
+        Intent i = new Intent(this, ColorSchemesActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToSettings(View v){
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 }

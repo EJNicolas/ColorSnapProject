@@ -175,17 +175,37 @@ public class ColorSchemesActivity extends Activity implements View.OnClickListen
         }
         //Creates a new row in the data base and starts the activity to view the colors in a scheme. Names the row with the name provided on the edit text. Passes the color scheme's name and id for saving in the next activity
         if(buttonAddColorScheme.isPressed()){
-            int results = Constants.dbColorSchemes.searchExactName(editTextNameInput.getText().toString());
-            if(results>=1){
-                Toast.makeText(this, "Please use a different name", Toast.LENGTH_SHORT).show();
+            if(editTextNameInput.getText().toString().equals("")){
+                Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
             }
             else{
-                long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
-                Intent i = new Intent(this, ViewColorSchemeActivity.class);
-                i.putExtra("COLOR_SCHEME_NAME", editTextNameInput.getText().toString());
-                i.putExtra("ROW_ID", id);
-                startActivity(i);
+                int results = Constants.dbColorSchemes.searchExactName(editTextNameInput.getText().toString());
+                if(results>=1){
+                    Toast.makeText(this, "Please use a different name", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    long id = Constants.dbColorSchemes.createRow(editTextNameInput.getText().toString());
+                    Intent i = new Intent(this, ViewColorSchemeActivity.class);
+                    i.putExtra("COLOR_SCHEME_NAME", editTextNameInput.getText().toString());
+                    i.putExtra("ROW_ID", id);
+                    startActivity(i);
+                }
             }
         }
+    }
+
+    public void moveToCamera(View v){
+        Intent i = new Intent(this, CameraActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToColorSchemes(View v){
+        Intent i = new Intent(this, ColorSchemesActivity.class);
+        startActivity(i);
+    }
+
+    public void moveToSettings(View v){
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 }
