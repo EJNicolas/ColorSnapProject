@@ -49,7 +49,7 @@
         android:textAllCaps="false"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-
+        android:id="@+id/buttonSaveColor"
         android:text="Save color"
         app:backgroundTint="#567DF4" />
 
